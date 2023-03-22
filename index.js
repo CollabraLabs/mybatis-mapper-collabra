@@ -3,6 +3,7 @@ var HTML = require('html-parse-stringify2');
 var sqlFormatter = require("sql-formatter");
 var convert = require('./lib/convert');
 var myBatisMapper = {};
+var path = require('path');
 
 function MybatisMapper() {
 
@@ -14,7 +15,8 @@ MybatisMapper.prototype.createMapper = function(xmls) {
   // Parse each XML files
   for (var i = 0, xml; xml = xmls[i]; i++) {
     try{
-      var rawText = replaceCdata(fs.readFileSync(xml).toString());     
+      //var rawText = replaceCdata(fs.readFileSync(xml).toString());     
+      var rawText = replaceCdata(fs.readFileSync(path.join(__dirname, '../../' + xml)).toString());
       var mappers = HTML.parse(rawText);
     } catch (err){
 			throw new Error("Error occured during open XML file [" + xml + "]");
